@@ -7,6 +7,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controlador.Coordinador;
+
 import java.awt.SystemColor;
 import java.awt.Toolkit;
 
@@ -21,6 +24,10 @@ public class VentanaPrincipal extends JFrame {
 	private JPanel contentPane;
 	private Dimension tamPantalla;
 	private Rectangle pantalla;
+	private Coordinador miCoordinador;
+	private JLabel lblTitulo;
+	private JButton btnRegistrar;
+	private JButton btnConsultar;
 
 	public VentanaPrincipal() {
 		setTitle("Ventana Principal");
@@ -37,26 +44,42 @@ public class VentanaPrincipal extends JFrame {
 
 		JPanel miPanelPrincipal = new JPanel();
 		miPanelPrincipal.setBackground(SystemColor.textHighlight);
-		miPanelPrincipal.setBounds(-1, 0, 790, 460);
+		miPanelPrincipal.setBounds(pantalla);
 		contentPane.add(miPanelPrincipal);
 		miPanelPrincipal.setLayout(null);
 
-		JLabel lblTitulo = new JLabel("Bienvenido al Sistema");
+		lblTitulo = new JLabel("Bienvenido:");
 		lblTitulo.setFont(new Font("Decker", Font.BOLD, 20));
 		lblTitulo.setBounds(32, 12, 668, 49);
 		miPanelPrincipal.add(lblTitulo);
 
-		JButton btnRegistrar = new JButton("Registrar");
+		btnRegistrar = new JButton("Registrar");
 		btnRegistrar.setOpaque(false);
 		btnRegistrar.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnRegistrar.setBounds(33, 119, 138, 41);
 		miPanelPrincipal.add(btnRegistrar);
 
-		JButton btnConsultar = new JButton("Consultar");
+		btnConsultar = new JButton("Consultar");
 		btnConsultar.setOpaque(false);
 		btnConsultar.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnConsultar.setBounds(37, 204, 131, 40);
 		miPanelPrincipal.add(btnConsultar);
 	}
 
+	public void setCoordinador(Coordinador miCoordinador) {
+		this.miCoordinador = miCoordinador;
+
+	}
+
+	public void asignarPrivilegios(String user) {
+		lblTitulo.setText("Bienvenido: " + user);
+
+		if (user.equals("Administrador")) {
+			btnConsultar.setVisible(true);
+			btnRegistrar.setVisible(true);
+		} else {
+			btnConsultar.setVisible(false);
+			btnRegistrar.setVisible(true);
+		}
+	}
 }
