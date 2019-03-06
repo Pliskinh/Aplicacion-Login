@@ -38,4 +38,10 @@ public class Coordinador {
 
 	}
 
+	public void mostrarLogin() {
+		miLogin.setVisible(true);
+		
+		
+	}
+
 }

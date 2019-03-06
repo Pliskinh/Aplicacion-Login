@@ -14,6 +14,8 @@ import controlador.Coordinador;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -41,10 +43,28 @@ public class VentanaLogin extends JDialog implements ActionListener {
 		setBounds(100, 100, 288, 441);
 		setResizable(false);
 		setLocationRelativeTo(null);
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
+
+		addWindowListener(new WindowAdapter() {
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+				Object[] options = { "continuar", "cerrar" };
+				int n = JOptionPane.showOptionDialog(null,
+						"Seleccione un tipo de usuario. \nSi sale el sistema se cerrara", "Confirmacion",
+						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+
+				if (n == JOptionPane.YES_OPTION) {
+				} else if (n == JOptionPane.NO_OPTION) {
+
+					System.exit(0);// CERRAR TODO EL SISTEMA
+				}
+			}
+		});
 
 		JPanel panelLogin = new JPanel();
 		panelLogin.setBackground(Color.GRAY);
@@ -126,6 +146,7 @@ public class VentanaLogin extends JDialog implements ActionListener {
 			} else {
 
 				JOptionPane.showMessageDialog(null, "Bienvenido: " + resp);
+				passwordField.setText("");
 				miCoordinador.asignarPrivilegios(resp);
 				miCoordinador.cerrarVentanaLogin();
 			}
