@@ -68,6 +68,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 		btnRegistrar.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnRegistrar.setBounds(33, 119, 138, 41);
 		miPanelPrincipal.add(btnRegistrar);
+		btnRegistrar.addActionListener(this);
 
 		barraMenu = new JMenuBar();
 		menu = new JMenu();
@@ -85,6 +86,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 		btnConsultar.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnConsultar.setBounds(37, 204, 131, 40);
 		miPanelPrincipal.add(btnConsultar);
+		btnConsultar.addActionListener(this);
 	}
 
 	public void setCoordinador(Coordinador miCoordinador) {
@@ -108,6 +110,13 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == itemOpciones) {
 			miCoordinador.mostrarLogin();
+		}
+
+		if (e.getSource() == btnRegistrar) {
+			miCoordinador.mostrarVentanaRegistro();
+		}
+		if (e.getSource() == btnConsultar) {
+			miCoordinador.mostrarVentanaConsulta();
 		}
 
 	}

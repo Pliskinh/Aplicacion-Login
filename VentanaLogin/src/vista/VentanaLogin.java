@@ -144,13 +144,16 @@ public class VentanaLogin extends JDialog implements ActionListener {
 			if (resp.equals("Error")) {
 				JOptionPane.showMessageDialog(null, "No ha seleccionado un usuario");
 			} else {
+				if (resp.equals("invalido")) {
+					JOptionPane.showMessageDialog(null, "El pass no corresponde");
+				} else {
+					JOptionPane.showMessageDialog(null, "Bienvenido: " + resp);
+					passwordField.setText("");
+					miCoordinador.asignarPrivilegios(resp);
+					miCoordinador.cerrarVentanaLogin();
+				}
 
-				JOptionPane.showMessageDialog(null, "Bienvenido: " + resp);
-				passwordField.setText("");
-				miCoordinador.asignarPrivilegios(resp);
-				miCoordinador.cerrarVentanaLogin();
 			}
-
 		}
 	}
 }
