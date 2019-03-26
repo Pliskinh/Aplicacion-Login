@@ -8,6 +8,8 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +18,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
 import controlador.Coordinador;
+import modelo.vo.UsuarioVo;
 
 import java.awt.Color;
 import javax.swing.JTextField;
@@ -24,32 +27,16 @@ import java.awt.Component;
 import javax.swing.Box;
 
 public class VentanaRegistro extends JDialog implements ActionListener {
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
+	private JTextField txtNombre;
+	private JTextField txtProfesion;
+	private JTextField txtDireccion;
+	private JTextField txtDocumento;
+	private JTextField txtEdad;
+	private JTextField txtTelefono;
 	private Coordinador miCoordinador;
 	private JButton btnAceptar;
 	private JButton btnCancelar;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			VentanaRegistro dialog = new VentanaRegistro();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Create the dialog.
-	 */
 	public VentanaRegistro() {
 		setBounds(100, 100, 740, 345);
 		getContentPane().setLayout(null);
@@ -67,35 +54,35 @@ public class VentanaRegistro extends JDialog implements ActionListener {
 		lblNewLabel.setBounds(66, 11, 576, 61);
 		panel.add(lblNewLabel);
 
-		textField = new JTextField();
-		textField.setBounds(101, 154, 213, 20);
-		panel.add(textField);
-		textField.setColumns(10);
+		txtNombre = new JTextField();
+		txtNombre.setBounds(101, 154, 213, 20);
+		panel.add(txtNombre);
+		txtNombre.setColumns(10);
 
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(101, 185, 213, 20);
-		panel.add(textField_1);
+		txtProfesion = new JTextField();
+		txtProfesion.setColumns(10);
+		txtProfesion.setBounds(101, 185, 213, 20);
+		panel.add(txtProfesion);
 
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(101, 216, 213, 20);
-		panel.add(textField_2);
+		txtDireccion = new JTextField();
+		txtDireccion.setColumns(10);
+		txtDireccion.setBounds(101, 216, 213, 20);
+		panel.add(txtDireccion);
 
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(446, 154, 213, 20);
-		panel.add(textField_3);
+		txtDocumento = new JTextField();
+		txtDocumento.setColumns(10);
+		txtDocumento.setBounds(446, 154, 213, 20);
+		panel.add(txtDocumento);
 
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(446, 185, 213, 20);
-		panel.add(textField_4);
+		txtEdad = new JTextField();
+		txtEdad.setColumns(10);
+		txtEdad.setBounds(446, 185, 213, 20);
+		panel.add(txtEdad);
 
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBounds(446, 216, 213, 20);
-		panel.add(textField_5);
+		txtTelefono = new JTextField();
+		txtTelefono.setColumns(10);
+		txtTelefono.setBounds(446, 216, 213, 20);
+		panel.add(txtTelefono);
 
 		JLabel lblNewLabel_1 = new JLabel("Nombre:");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -162,10 +149,30 @@ public class VentanaRegistro extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnAceptar) {
-			miCoordinador.registrarUsuario();
+			registrar();
+
 		}
 		if (e.getSource() == btnCancelar) {
 
+		}
+
+	}
+
+	private void registrar() {
+		UsuarioVo miUsuarioVo = new UsuarioVo();
+		miUsuarioVo.setDocumento(txtDocumento.getText());
+		miUsuarioVo.setDireccion(txtDireccion.getText());
+		miUsuarioVo.setNombre(txtNombre.getText());
+		miUsuarioVo.setEdad(Integer.parseInt(txtEdad.getText()));
+		miUsuarioVo.setProfesion(txtProfesion.getText());
+		miUsuarioVo.setTelefono(txtTelefono.getText());
+
+		String retorno = miCoordinador.registrarUsuario(miUsuarioVo);
+
+		if (retorno.equals("ok")) {
+			JOptionPane.showMessageDialog(null, "El usuario fue registrado con exito!!!");
+		} else {
+			JOptionPane.showMessageDialog(null, "El usuario no fue registrado!!!");
 		}
 
 	}

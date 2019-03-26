@@ -80,8 +80,8 @@ public class Coordinador {
 
 	}
 
-	public void registrarUsuario() {
-		miUsuarioDao.registrarUsuario();
+	public String registrarUsuario(UsuarioVo datosUsuario) {
+		return  miUsuarioDao.registrarUsuario(datosUsuario);
 		
 	}
 
