@@ -84,7 +84,7 @@ public class VentanaRegistro extends JDialog implements ActionListener {
 		txtTelefono.setBounds(446, 216, 213, 20);
 		panel.add(txtTelefono);
 
-		JLabel lblNewLabel_1 = new JLabel("Nombre:");
+		JLabel lblNewLabel_1 = new JLabel("*Nombre:");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setBounds(10, 154, 81, 20);
 		panel.add(lblNewLabel_1);
@@ -99,7 +99,7 @@ public class VentanaRegistro extends JDialog implements ActionListener {
 		lblDireccion.setBounds(10, 219, 81, 20);
 		panel.add(lblDireccion);
 
-		JLabel lblDocumento = new JLabel("Documento:");
+		JLabel lblDocumento = new JLabel("*Documento:");
 		lblDocumento.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDocumento.setBounds(355, 154, 81, 20);
 		panel.add(lblDocumento);
@@ -153,26 +153,47 @@ public class VentanaRegistro extends JDialog implements ActionListener {
 
 		}
 		if (e.getSource() == btnCancelar) {
-
+			dispose();
 		}
 
 	}
 
 	private void registrar() {
 		UsuarioVo miUsuarioVo = new UsuarioVo();
-		miUsuarioVo.setDocumento(txtDocumento.getText());
-		miUsuarioVo.setDireccion(txtDireccion.getText());
-		miUsuarioVo.setNombre(txtNombre.getText());
-		miUsuarioVo.setEdad(Integer.parseInt(txtEdad.getText()));
-		miUsuarioVo.setProfesion(txtProfesion.getText());
-		miUsuarioVo.setTelefono(txtTelefono.getText());
 
-		String retorno = miCoordinador.registrarUsuario(miUsuarioVo);
+		Integer edad = miCoordinador.validarEdad(txtEdad.getText().trim());
 
-		if (retorno.equals("ok")) {
-			JOptionPane.showMessageDialog(null, "El usuario fue registrado con exito!!!");
+		if (edad != null) {
+			miUsuarioVo.setDocumento(txtDocumento.getText().trim());
+			miUsuarioVo.setDireccion(txtDireccion.getText().trim());
+			miUsuarioVo.setNombre(txtNombre.getText().trim());
+			miUsuarioVo.setEdad(edad);
+			miUsuarioVo.setProfesion(txtProfesion.getText().trim());
+			miUsuarioVo.setTelefono(txtTelefono.getText().trim());
+
+			String retorno = "";
+			if (miCoordinador.validarCampos(miUsuarioVo)) {
+
+				retorno = miCoordinador.registrarUsuario(miUsuarioVo);
+			} else {
+				retorno = "mas_datos";
+			}
+
+			if (retorno.equals("ok")) {
+				JOptionPane.showMessageDialog(null, "El usuario fue registrado con exito!!!");
+			} else {
+
+				if (retorno.equals("error")) {
+					JOptionPane.showMessageDialog(null, "El usuario no fue registrado!!!");
+				} else {
+					JOptionPane.showMessageDialog(null, "Se necesitan completar los campos obligatorios (*)!!!",
+							"Advertencia", JOptionPane.WARNING_MESSAGE);
+				}
+
+			}
 		} else {
-			JOptionPane.showMessageDialog(null, "El usuario no fue registrado!!!");
+			JOptionPane.showMessageDialog(null, "Debe ingresar una edad valida!!!", "Advertencia",
+					JOptionPane.WARNING_MESSAGE);
 		}
 
 	}

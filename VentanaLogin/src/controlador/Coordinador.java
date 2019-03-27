@@ -81,8 +81,36 @@ public class Coordinador {
 	}
 
 	public String registrarUsuario(UsuarioVo datosUsuario) {
-		return  miUsuarioDao.registrarUsuario(datosUsuario);
-		
+		return miUsuarioDao.registrarUsuario(datosUsuario);
+
+	}
+
+	public boolean validarCampos(UsuarioVo miUsuarioVo2) {
+		boolean validarNombre = false;
+		boolean validarDocumento = false;
+
+		String documento = miUsuarioVo2.getDocumento();
+		String nombre = miUsuarioVo2.getNombre();
+
+		if (documento != null && !documento.equals("")) {
+			validarDocumento = true;
+		}
+		if (nombre != null && !nombre.equals("")) {
+			validarNombre = true;
+		}
+
+		if (validarDocumento == true && validarNombre == true) {
+
+			return true;
+		} else {
+
+			return false;
+		}
+
+	}
+
+	public Integer validarEdad(String edadIngresada) {
+		return miLogica.validarEdad(edadIngresada);
 	}
 
 }

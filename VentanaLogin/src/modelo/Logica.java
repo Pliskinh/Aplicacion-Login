@@ -54,4 +54,17 @@ public class Logica {
 
 	}
 
+	public Integer validarEdad(String edadIngresada) {
+
+		Integer edad = null;
+
+		try {
+			edad = Integer.parseInt(edadIngresada);
+		} catch (Exception e) {
+			edad = null;
+		}
+
+		return edad;
+	}
+
 }
